@@ -1,12 +1,12 @@
 // import css from './ImageCard.module.css';
 
-export default function ImageCard( {likes, description,urls:{small,regular},alternative_slugs:{en}} ) {
+export default function ImageCard( {item} ) {
   return (
     <>
-      <p>likes:{likes}</p>
-              <p>description:{description}</p>
-              <span>url for modal: {regular}</span>
-              <img src={small} alt={en}></img>
+      <p>likes:{item.likes}</p>
+              <p>description:{item.description}</p>
+              <span>url for modal: {item.urls.regular}</span>
+              <img src={item.urls.small} alt={item.alternative_slugs.en}></img>
     </>
   );
 }

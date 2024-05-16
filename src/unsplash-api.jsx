@@ -1,23 +1,11 @@
 // src/articles-api.js
 import axios from "axios";
 
-const baseURL = "https://api.unsplash.com/";
+axios.defaults.baseURL="https://api.unsplash.com/";
+
 const API_KEY = "kAC5N1ugVhBQNEKoK7GlGSSH_wSZ5q-3XGJiB6o26EU";
 
-export const fetchArticlesWithTopic = async (topic, page) => {
-  try {
-    const response = await axios.get(`${baseURL}/search/photos`, {
-      params: {
-        query: topic,
-        client_id: API_KEY,
-        page,
-      },
-    });
-
-    console.log(response.data);
+export const getImages = async (topic) => {
+      const response = await axios.get(`/search/photos?client_id=${API_KEY}&page=1&query=${topic}`);
     return response.data.results;
-  } catch (error) {
-    console.error("Error fetching articles:", error);
-    throw error;
-  }
 };
