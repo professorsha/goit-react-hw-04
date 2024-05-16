@@ -1,15 +1,15 @@
 // import css from './ImageGallery.module.css';
 import ImageCard from '../ImageCard/ImageCard';
-export default function ImageGallery() {
+export default function ImageGallery({images}) {
   return (
-    <ul>
-      {/* Набір елементів списку із зображеннями */}
-      <li>
-        <div>
-        <ImageCard/>
-          
-        </div>
-      </li>
-    </ul>
+
+      <ul>
+          {images.map(({image}) => (
+            <li key={image.id}>
+              <ImageCard image={image}/>
+            </li>
+          ))}
+        </ul>
+    
   );
 }
