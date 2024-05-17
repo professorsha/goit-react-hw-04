@@ -1,26 +1,42 @@
-// import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { getImages } from '../../unsplash-api';
 import ImageGallery from '../ImageGallery/ImageGallery';
 import SearchBar from '../SearchBar/SearchBar';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import Loader from '../Loader/Loader';
 
 export default function App() {
   const [images, setImages] = useState([]);
-  
-  useEffect(() => {
-    async function fetchData() {
-      const fetchedData = await getImages('react')
-      setImages(fetchedData);
-    }
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-    fetchData();
-  }, []);
-  // console.log(images);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       setIsLoading(true);
+  //       const fetchedData = await getImages('css');
+  //       setImages(fetchedData);
+  //     } catch (error) {
+  //       setIsError(true);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+
+  //   fetchData();
+  // }, []);
+  const handleSearch = async (topic) => {
+    // setSearchQuery(topic);
+    console.log(topic);
+    // setPage(1);
+    setImages([]);
+  };
   return (
     <div>
-      <h1>Latest articles</h1>
-      <SearchBar/>
-      {images.length > 0 && <ImageGallery items={images}/>}
+      <SearchBar onSearch={handleSearch} />
+      {isLoading && <Loader />}
+      {isError && <ErrorMessage />}
+      {images.length > 0 && <ImageGallery items={images} />}
     </div>
   );
 }
