@@ -2,7 +2,10 @@ import css from './SearchBar.module.css';
 import { Formik, Form, Field } from 'formik';
  import toast, { Toaster } from 'react-hot-toast';
 
+ 
+
 export default function SearchBar({ onSearch }) {
+  const notify = () => toast('Enter search text!!!');
   return (
     <header>
       <Formik
@@ -19,7 +22,7 @@ export default function SearchBar({ onSearch }) {
             placeholder="Search images and photos"
             name="query"
           />
-          <button type="submit">Search</button>
+          <button type="submit" onClick={notify}>Search</button>
           <Toaster />
         </Form>
       </Formik>

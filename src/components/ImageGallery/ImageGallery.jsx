@@ -1,12 +1,12 @@
-// import css from './ImageGallery.module.css';
+ import css from './ImageGallery.module.css';
 import ImageCard from '../ImageCard/ImageCard';
 export default function ImageGallery({items}) {
   // console.log(items);
   return (
 
-      <ul>
+      <ul className={css.galery}>
            {items.map((item) => (
-            <li key={item.id}> 
+            <li key={item.id} className={css.galeryItem}> 
               
               <ImageCard item={item}/> 
              </li> 

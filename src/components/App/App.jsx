@@ -9,17 +9,18 @@ export default function App() {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    if (searchQuery.trim() === "") {
+    if (searchQuery.trim() === '') {
       return;
     }
     async function fetchData() {
       try {
         setIsLoading(true);
-        const data = await getImages(searchQuery);
-        setImages((prevState) => [...prevState, ...data]);
+        const data = await getImages(searchQuery, page);
+        setImages(prevState => [...prevState, ...data]);
       } catch (error) {
         setIsError(true);
       } finally {
@@ -28,12 +29,15 @@ export default function App() {
     }
 
     fetchData();
-  }, [searchQuery]);
-  const handleSearch = async (topic) => {
+  }, [searchQuery, page]);
+
+  const handleSearch = async topic => {
     setSearchQuery(topic);
-    console.log(topic);
-    // setPage(1);
+    setPage(1);
     setImages([]);
+  };
+  const handleLoadMore = async () => {
+    setPage(page + 1);
   };
   return (
     <div>
@@ -41,6 +45,9 @@ export default function App() {
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
       {images.length > 0 && <ImageGallery items={images} />}
+      {images.length > 0 && !isLoading && (
+        <button onClick={handleLoadMore}>Load more</button>
+      )}
     </div>
   );
 }
