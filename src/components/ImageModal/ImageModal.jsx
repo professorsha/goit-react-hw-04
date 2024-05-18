@@ -1,4 +1,4 @@
-// import css from './ImageModal.module.css';
+ import css from './ImageModal.module.css';
 
 import Modal from "react-modal";
 
@@ -32,8 +32,8 @@ const ImageModal = ({ isOpen,imageLikes, onClose, imageUrl }) => {
       {/* <button onClick={onClose} className="close-btn">
         &times;
       </button> */}
-      <span>likes: {imageLikes}</span>
-      <img src={imageUrl} alt="Large" width="500px" />
+      <span className={css.likes}>likes: {imageLikes}</span>
+      <img src={imageUrl} className={css.img} alt="Large" width="500px" />
       </div>
     </Modal>
   );

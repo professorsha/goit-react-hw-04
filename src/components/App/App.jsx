@@ -5,6 +5,7 @@ import SearchBar from '../SearchBar/SearchBar';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Loader from '../Loader/Loader';
 import ImageModal from '../ImageModal/ImageModal';
+import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
 
 export default function App() {
   const [images, setImages] = useState([]);
@@ -58,7 +59,8 @@ export default function App() {
         <ImageGallery items={images} onClick={openModal} />
       )}
       {images.length > 0 && !isLoading && (
-        <button onClick={handleLoadMore}>Load more</button>
+        <LoadMoreBtn onClick={handleLoadMore}/>
+       
       )}
         <ImageModal
         isOpen={modalIsOpen}
