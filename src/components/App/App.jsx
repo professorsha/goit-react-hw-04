@@ -4,6 +4,7 @@ import ImageGallery from '../ImageGallery/ImageGallery';
 import SearchBar from '../SearchBar/SearchBar';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Loader from '../Loader/Loader';
+import ImageModal from '../ImageModal/ImageModal';
 
 export default function App() {
   const [images, setImages] = useState([]);
@@ -11,11 +12,11 @@ export default function App() {
   const [isError, setIsError] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedImageUrl, setSelectedImageUrl] = useState('');
+  const [imageLikes,setImageLikes]=useState(0);
 
   useEffect(() => {
-    if (searchQuery.trim() === '') {
-      return;
-    }
     async function fetchData() {
       try {
         setIsLoading(true);
@@ -27,8 +28,9 @@ export default function App() {
         setIsLoading(false);
       }
     }
-
-    fetchData();
+    if (searchQuery != '') {
+      fetchData();
+    }
   }, [searchQuery, page]);
 
   const handleSearch = async topic => {
@@ -39,15 +41,31 @@ export default function App() {
   const handleLoadMore = async () => {
     setPage(page + 1);
   };
+  const openModal = (imageUrl,likes) => {
+    setSelectedImageUrl(imageUrl);
+    setImageLikes(likes);
+    setModalIsOpen(true);
+  };
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
   return (
     <div>
       <SearchBar onSearch={handleSearch} />
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
-      {images.length > 0 && <ImageGallery items={images} />}
+      {images.length > 0 && (
+        <ImageGallery items={images} onClick={openModal} />
+      )}
       {images.length > 0 && !isLoading && (
         <button onClick={handleLoadMore}>Load more</button>
       )}
+        <ImageModal
+        isOpen={modalIsOpen}
+        imageLikes={imageLikes}
+        onClose={closeModal}
+        imageUrl={selectedImageUrl}
+      />
     </div>
   );
 }

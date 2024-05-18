@@ -1,19 +1,23 @@
 import css from './SearchBar.module.css';
+import { FaSearch } from "react-icons/fa";
 import { Formik, Form, Field } from 'formik';
- import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
- 
+const notify = () => toast('Enter search text!!!');
 
 export default function SearchBar({ onSearch }) {
-  const notify = () => toast('Enter search text!!!');
   return (
     <header>
       <Formik
         initialValues={{ query: '' }}
-       onSubmit={(values, actions) => {
-        onSearch(values.query);
-        actions.resetForm();
-      }}
+        onSubmit={(values, actions) => {
+          if (values.query === '') {
+            notify();
+          } else {
+            onSearch(values.query);
+            actions.resetForm();
+          }
+        }}
       >
         <Form className={css.form}>
           <Field
@@ -22,7 +26,10 @@ export default function SearchBar({ onSearch }) {
             placeholder="Search images and photos"
             name="query"
           />
-          <button type="submit" onClick={notify}>Search</button>
+          <button className={css.btn} type="submit">
+            <FaSearch />
+          </button>
+          
           <Toaster />
         </Form>
       </Formik>
