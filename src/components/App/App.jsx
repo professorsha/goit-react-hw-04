@@ -9,24 +9,28 @@ export default function App() {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       setIsLoading(true);
-  //       const fetchedData = await getImages('css');
-  //       setImages(fetchedData);
-  //     } catch (error) {
-  //       setIsError(true);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   }
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      return;
+    }
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const data = await getImages(searchQuery);
+        setImages((prevState) => [...prevState, ...data]);
+      } catch (error) {
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, [searchQuery]);
   const handleSearch = async (topic) => {
-    // setSearchQuery(topic);
+    setSearchQuery(topic);
     console.log(topic);
     // setPage(1);
     setImages([]);
